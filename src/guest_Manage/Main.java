@@ -49,7 +49,9 @@ public class Main {
 				 //introduction();
 			 //}
 			 if (guestsList != null) {
-				 System.out.println("Version restored");
+				 System.out.println("Version restored. This version already contains registrations.");
+				 System.out.println("Please press enter to reach the list of commands");
+				 System.out.println();
 			 }
 
 		 } catch (FileNotFoundException e) {
@@ -63,15 +65,15 @@ public class Main {
 			 
 	        //}
 		
-		System.out.println("Bine ati venit!");
+		System.out.println("Welcome!");
 		//sc.nextLine();
 
 		
 		if (guestsList == null) {
-			System.out.println("Introduceti numarul de locuri disponibile: ");
+			System.out.println("Insert number of available entries: ");
 			
 			while (!sc.hasNextInt()) {
-				   System.out.println("Introduceti un numar:");
+				   System.out.println("Insert a number:");
 				   sc.nextLine();
 			}
 			int locuri = sc.nextInt();
@@ -83,7 +85,7 @@ public class Main {
 		sc.nextLine();
 		
 		while (quit) {
-			System.out.println("Asteapta comanda: (help - Afiseaza lista de comenzi)");
+			System.out.println("Awaiting command: (help - prints the list of commands)");
 			String command = sc.nextLine();
 			
 			switch(command) {
@@ -97,7 +99,7 @@ public class Main {
 					guestsList.checkIfSubscribed(getGuest(guestsList));
 					break;
 				case "remove":
-					System.out.println("Se va sterge persoana din lista");
+					System.out.println("Guest will be removed from list");
 					guestsList.remove(getGuest(guestsList));
 					break;
 				case "update":
@@ -113,19 +115,19 @@ public class Main {
 					guestsList.printWaitList();
 					break;
 				case "available" :
-					System.out.println("Numarul de locuri libere este de: " + guestsList.getAvailableSeatsNo());
+					System.out.println("Number of available entries: " + guestsList.getAvailableSeatsNo());
 					break;
 				case "guests_no":
-					System.out.println("Numarul de oameni care participa la eveniment este: " + guestsList.getRegisteredGuestsNumber());
+					System.out.println("Number of participants: " + guestsList.getRegisteredGuestsNumber());
 					break;
 				case "waitlist_no":
-					System.out.println("Numarul de oameni care sunt in asteptare: " + guestsList.getQueuedNumber());
+					System.out.println("Waiting list size: " + guestsList.getQueuedNumber());
 					break;
 				case "subscribe_no":
-					System.out.println("Numarul total de persoane inscrise: " + guestsList.getAllRegistrations());
+					System.out.println("Total registrations: " + guestsList.getAllRegistrations());
 					break;
 				case "search":
-					System.out.println("Introduceti sirul de caractere dupa care vreti sa faceti cautarea: ");
+					System.out.println("Insert characters to search registry: ");
 					String search = sc.nextLine();
 					guestsList.printPartialSearchReg(guestsList.partialSearchReg(search));
 					break;
@@ -136,11 +138,11 @@ public class Main {
                     break;
 				case "quit":
 					quit = false;
-					System.out.println("Aplicatia se inchide...");
+					System.out.println("The app is closing...");
 					save(guestsList);
 					break;
 				default:
-					System.out.println("Comanda introdusa nu este valida. \nIncercati inca o data.");
+					System.out.println("The command is not valid. \nTry again.");
 					break;
 				}
 			} sc.close();
@@ -151,17 +153,17 @@ public class Main {
 	// This method registers guests to event (gets personal information)
 	public static Guest add() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Introduceti numele: ");
+		System.out.println("Insert surname: ");
 		String lastName = sc.nextLine();
-		System.out.println("Introduceti prenumele: ");
+		System.out.println("Insert name: ");
 		String firstName = sc.nextLine();
-		System.out.println("Introduceti adresa de e-mail: ");
+		System.out.println("Insert e-mail: ");
 		String email = sc.nextLine();
 		/*while (!email.contains("@")) {
 			System.out.println("Va rugam introduceti o adresa corecta");
 			email = sc.nextLine();
 		}*/
-		System.out.println("Introduceti numarul de telefon (format \"+0724147649\") ");
+		System.out.println("Insert phone no (format \"+0724147649\") ");
 		String phoneNo = sc.nextLine();
 		/*String phoneDigits = phoneNo.substring(1);
 		while ((!phoneDigits.matches("[0-9]+")) && (!phoneNo.startsWith("+"))) {
@@ -177,29 +179,29 @@ public class Main {
 	public static Guest getGuest(GuestsList list) {
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("Alege modul de autentificare, tastand: ");
-		System.out.println("\t 1. Nume si prenume \n\t 2. Email \n\t 3. Numar de telefon (format \"+0724147649\")");
+		System.out.println("Select the authentication method: ");
+		System.out.println("\t 1. Surname & name \n\t 2. E-mail \n\t 3. Phone no (format \"+0724147649\")");
 		int input = sc.nextInt();
 		sc.nextLine();
 		
 		switch (input) {
 			case 1:
-				System.out.println("Introduceti prenumele: ");
+				System.out.println("Insert name: ");
 				String firstName = sc.nextLine();
-				System.out.println("Introduceti numele: ");
+				System.out.println("Insert surname: ");
 				String lastName = sc.nextLine();
 				String fullName = firstName + " " + lastName;
 				return list.getGuestByName(fullName);
 			case 2:
-				System.out.println("Introduceti adresa de email: ");
+				System.out.println("Insert e-mail: ");
 				String email = sc.nextLine();
 				return list.getGuestByEmail(email);
 			case 3:
-				System.out.println("Introduceti numarul de telefon (format \"+0724147649\")");
+				System.out.println("Insert phone no (format \"+0724147649\")");
 				String phoneNo = sc.nextLine();
 				return list.getGuestByPhoneNo(phoneNo);
 			default:
-				System.out.println("Comanda introdusa nu este valida. \nIncercati inca o data.");
+				System.out.println("The command is not valid. \nTry again.");
 				break;
 		} //sc.close();
 		return null;
@@ -210,39 +212,39 @@ public class Main {
 		
 		String[] newInfo = new String[2];
 		
-		System.out.println("Alege ce vrei sa modifici: ");
-		System.out.println("\t 1. Nume \n\t 2. Prenume \n\t 3. Email" +
-							" \n\t 4. Numar de telefon (format \"+0724147649\")");
+		System.out.println("Choose to modify: ");
+		System.out.println("\t 1. Surname \n\t 2. Name \n\t 3. E-mail" +
+							" \n\t 4. Phone no (format \"+0724147649\")");
 		int input = sc.nextInt();
 		sc.nextLine();
 		
 		switch (input) {
 			case 1:
-				System.out.println("Te rog sa introduci numele de familie nou: ");
+				System.out.println("Please insert new surname: ");
 				String newLastName = sc.nextLine();
 				newInfo[0] = newLastName;
 				newInfo[1] = "lastName";
 				break;
 			case 2:
-				System.out.println("Te rog sa introduci prenumele nou: ");
+				System.out.println("TPlease insert new first name: ");
 				String newFirstName = sc.nextLine();
 				newInfo[0] = newFirstName;
 				newInfo[1] = "firstName";
 				break;
 			case 3:
-				System.out.println("Te rog sa introduci noul email: ");
+				System.out.println("Please insert new e-mail: ");
 				String newEmail = sc.nextLine();
 				newInfo[0] = newEmail;
 				newInfo[1] = "email";
 				break;
 			case 4:
-				System.out.println("Te rog sa introduci noul numar de telefon: ");
+				System.out.println("Please insert new phone no: ");
 				String newPhoneNo = sc.nextLine();
 				newInfo[0] = newPhoneNo;
 				newInfo[1] = "phoneNo";
 				break;
 			default:
-				System.out.println("Comanda introdusa nu este valida. \nIncercati inca o data.");
+				System.out.println("The command is not valid. \nTry again.");
 				break;
 		} //sc.close();
 		return newInfo;
